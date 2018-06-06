@@ -5,7 +5,7 @@ repositories {
 apply plugin: 'java'
 
 dependencies {
-    compile 'org.antlr:antlr4-runtime:4.5.1'
+    compile 'org.antlr:antlr4-runtime:4.7'
 }
 
 sourceSets {

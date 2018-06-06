@@ -1,0 +1,35 @@
+int LpYr(int yr);
+
+int main()
+{
+   int  VAR__3918907;
+   int  VAR__1238129;
+   int  VAR__12302;
+   int  VAR__53647;
+   int  days;
+   int  dayofwn;
+   int  daysofm[12]  = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+   char dayofw[7][5] = { "Sun.", "Mon.", "Tue.", "Wed.", "Thu.", "Fri.", "Sat." };
+
+   scanf("%d%d%d", &VAR__3918907, &VAR__1238129, &VAR__12302);
+   days = (((( VAR__3918907 - 1 ) + (( VAR__3918907 - 1 ) / 4 )) - (( VAR__3918907 - 1 ) / 100 )) + (( VAR__3918907 - 1 ) / 400 )) + VAR__12302;
+   for ( VAR__53647 = 0; VAR__53647 < ( VAR__1238129 - 1 ); VAR__53647++ )
+   {
+      days += daysofm[VAR__53647];
+   }
+
+   if ( VAR__1238129 > 2 )
+   {
+      days += LpYr(VAR__3918907);
+   }
+
+   dayofwn = days % 7;
+   printf("%s\n", dayofw[dayofwn]);
+   return 0;
+}
+
+
+int LpYr(int yr)
+{
+   return ((( yr % 100 ) != 0 ) && (( yr % 4 ) == 0 )) || (( yr % 400 ) == 0 );
+}
