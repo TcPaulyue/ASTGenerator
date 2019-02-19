@@ -71,21 +71,22 @@ public class CASTGenerator {
         return tmp;
     }
     public static void main(String args[]) throws IOException {
-        k = 3;
+        k = 0;
         //num="8";
-        String path = "resource/train/";
-        DirectoryList = readDirectoryList(path);
-        for (int k = 0; k < DirectoryList.size(); k++) {
-            FileList = readFileList(path + DirectoryList.get(k) + "/");
-            String newpath = "resource/trainoutfile/" + DirectoryList.get(k) + "/";
+        String path = "resource/test/";
+        //DirectoryList = readDirectoryList(path);
+        //for (int k = 0; k < DirectoryList.size(); k++) {
+            FileList = readFileList(path );
+            String newpath = "resource/trainouttest/" ;
             File folder = new File(newpath);
             if (!folder.exists() && !folder.isDirectory()) {
                 System.out.println("文件夹路径不存在，创建路径:" +newpath);
                 folder.mkdir();
             }
-            for (int i = 0; i < FileList.size(); i++) {
+            int i=0;
+            //for (int i = 0; i < FileList.size(); i++) {
                 CASTGenerator castGenerator = new CASTGenerator();
-                String inputString = castGenerator.readFile(path + DirectoryList.get(k) + "/"+ FileList.get(i));
+                String inputString = castGenerator.readFile(path + FileList.get(i));
                 ANTLRInputStream input = new ANTLRInputStream(inputString);
                 CLexer lexer = new CLexer(input);
                 CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -93,12 +94,11 @@ public class CASTGenerator {
                 ParserRuleContext ctx = parser.compilationUnit();
                 castGenerator.generateAST(ctx, false, 0);
                 castGenerator.writeFile(newpath + FileList.get(i));
-                /*System.out.println("digraph G {");
-                printDOT();
-                System.out.println("}");*/
-            }
+                System.out.println("digraph G {");
+                castGenerator.printDOT();
+                System.out.println("}");
+            //}
         }
-    }
     private void generateAST(RuleContext ctx, boolean verbose, int indentation) {
         boolean toBeIgnored = !verbose && ctx.getChildCount() == 1 && ctx.getChild(0) instanceof ParserRuleContext;
 
@@ -136,7 +136,7 @@ public class CASTGenerator {
             tmp=Type.get(i)+Type.get(i+1)+Type.get(i+2);*/
             kgram.add(tmp);
             System.out.println(kgram.get(i));
-           // System.out.println(LineNum.get(i)+i+"[label=\""+Type.get(i)+"\\n "+Content.get(i)+" \"]");
+            System.out.println(LineNum.get(i)+i+"[label=\""+Type.get(i)+"\\n "+Content.get(i)+" \"]");
         }
     }
 
